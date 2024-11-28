@@ -40,7 +40,7 @@ fun ShowsPage(sizeClasses: WindowSizeClass, viewModel: MainViewModel, onShowClic
     }
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(columnsNumber),
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp),
         modifier = Modifier.padding(5.dp)
