@@ -59,7 +59,7 @@ class ListMovies(
     var results: List<Movie> = listOf(),
 )
 
-data class Show(                                                                                                                                                     Show (
+data class Show (
     val adult: Boolean = false,
     val backdrop_path: String = "",
     val episode_run_time: List<Int> = listOf(),

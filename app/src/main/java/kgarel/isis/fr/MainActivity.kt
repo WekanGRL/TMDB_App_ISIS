@@ -185,7 +185,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<Music> {
                             viewModel.changeDestination(Destination.MUSIC)
-                            MusicPage()
+                            MusicPage(windowSizeClass, viewModel)
                         }
                         composable<Movies> {
                             viewModel.changeDestination(Destination.MOVIES)

@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import coil.memory.MemoryCache
 import com.example.myapplicationtest.playlistjson
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -36,7 +35,7 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
     val shows = MutableStateFlow<List<Show>>(listOf())
     val actors = MutableStateFlow<List<Actor>>(listOf())
 
-    val playlist=MutableStateFlow<Playlist?>(null)
+    val playlist = MutableStateFlow<Playlist?>(null)
 
     val selectedMovie = MutableStateFlow<Movie?>(null)
     val selectedShow = MutableStateFlow<Show?>(null)
@@ -49,6 +48,7 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
         getInitialMovies()
         getInitialShows()
         getInitialActors()
+        getPlaylist()
     }
 
     fun getPlaylist(){
@@ -57,7 +57,7 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
 
     // récupère la playlist
     fun fetchPlaylist(): Playlist {
-        val moshi=Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        val moshi=Moshi.Builder().build()
         return moshi.adapter(Playlist::class.java).fromJson(playlistjson)!!
     }
 
