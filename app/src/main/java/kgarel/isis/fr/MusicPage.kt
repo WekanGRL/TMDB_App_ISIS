@@ -36,14 +36,13 @@ fun MusicPage(sizeClasses: WindowSizeClass, viewModel: MainViewModel) {
     val playlist by viewModel.playlist.collectAsStateWithLifecycle()
 
     val widthClass = sizeClasses.windowWidthSizeClass
-//    val columnsNumber = when (widthClass) {
-//        WindowWidthSizeClass.EXPANDED -> 3
-//        else -> 2
-//    }
+    val columnsNumber = when (widthClass) {
+        WindowWidthSizeClass.EXPANDED -> 3
+        else -> 2
+    }
 
     // Je comprends plus rien aux layouts, tant pis
 
-    val columnsNumber = 2
 
     Row {
         AsyncImage(
