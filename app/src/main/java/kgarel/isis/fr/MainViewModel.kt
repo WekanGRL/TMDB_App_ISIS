@@ -99,11 +99,10 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
 
     // MOVIES
     fun getInitialMovies() {
-        // Only take from db otherwise app crashes
+
         viewModelScope.launch {
-            movies.value =
-            //repo.trendingMovies()
-            repo.getFavoriteMovies()
+            movies.value = repo.trendingMovies()
+
         }
     }
 
@@ -140,10 +139,7 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
     // SHOWS
     fun getInitialShows() {
         viewModelScope.launch {
-            // Only take from db otherwise app crashes
-            shows.value =
-              //  repo.trendingShows()
-            repo.getFavoriteShows()
+            shows.value = repo.trendingShows()
         }
     }
 
@@ -181,9 +177,7 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
     fun getInitialActors() {
         // Only take from db otherwise app crashes
         viewModelScope.launch {
-            actors.value =
-            repo.getFavoriteActors()
-           // repo.trendingActors()
+            actors.value = repo.trendingActors()
         }
     }
 
