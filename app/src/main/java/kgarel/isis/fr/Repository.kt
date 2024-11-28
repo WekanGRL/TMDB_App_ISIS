@@ -19,6 +19,7 @@ class Repository(val tmdbapi: TMDBApi, val db: TMDBDao) {
 
     // MOVIES
     suspend fun trendingMovies(): List<Movie> {
+
         val listApi = tmdbapi.getTrendingMovies(api_key).results
         val listDB = db.getMovies()
 

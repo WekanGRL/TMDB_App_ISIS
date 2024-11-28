@@ -21,6 +21,7 @@ enum class Destination (index: Int) {
     MOVIE_DETAILS(4),
     SHOW_DETAILS(5),
     ACTOR_DETAILS(6),
+    MUSIC(99)
 }
 
 @HiltViewModel
@@ -80,7 +81,12 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
 
     // MOVIES
     fun getInitialMovies() {
-        viewModelScope.launch { movies.value = repo.trendingMovies() }
+        // Only take from db otherwise app crashes
+        viewModelScope.launch {
+            movies.value =
+            //repo.trendingMovies()
+            repo.getFavoriteMovies()
+        }
     }
 
     private fun searchMovies(search: String) {
@@ -115,7 +121,12 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
 
     // SHOWS
     fun getInitialShows() {
-        viewModelScope.launch { shows.value = repo.trendingShows()  }
+        viewModelScope.launch {
+            // Only take from db otherwise app crashes
+            shows.value =
+              //  repo.trendingShows()
+            repo.getFavoriteShows()
+        }
     }
 
     private fun searchSeries(search: String) {
@@ -150,7 +161,12 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
 
     // ACTORS
     fun getInitialActors() {
-        viewModelScope.launch { actors.value = repo.trendingActors() }
+        // Only take from db otherwise app crashes
+        viewModelScope.launch {
+            actors.value =
+            repo.getFavoriteActors()
+           // repo.trendingActors()
+        }
     }
 
     private fun searchActors(search: String) {

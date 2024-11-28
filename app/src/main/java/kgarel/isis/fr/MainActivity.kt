@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -87,6 +88,9 @@ class Shows
 class Actors
 
 @Serializable
+class Music
+
+@Serializable
 class MovieDetails
 
 @Serializable
@@ -94,6 +98,8 @@ class ShowDetails
 
 @Serializable
 class ActorDetails
+
+
 
 @HiltAndroidApp
 class IMDBApplication : Application()
@@ -141,7 +147,9 @@ class MainActivity : ComponentActivity() {
                             ) { }
                             IconButton(
                                 onClick = { viewModel.onGlobalFavClick() },
-                                modifier = Modifier.fillMaxWidth().padding(5.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp),
                             ) {
                                 if (viewModel.globalFav) {
                                     Icon(
@@ -173,7 +181,11 @@ class MainActivity : ComponentActivity() {
                             viewModel.changeDestination(Destination.PROFILE)
                             ProfilePage(
                                 windowSizeClass,
-                                onStartClick = { navController.navigate(Movies()) })
+                                onStartClick = { navController.navigate(Music()) })
+                        }
+                        composable<Music> {
+                            viewModel.changeDestination(Destination.MUSIC)
+                            MusicPage()
                         }
                         composable<Movies> {
                             viewModel.changeDestination(Destination.MOVIES)
@@ -216,6 +228,15 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavBar(sizeClasses: WindowSizeClass, navController: NavHostController) {
     NavigationBar(containerColor = Color.Magenta, contentColor = Color.White) {
+        NavigationBarItem(icon = {
+            Icon(
+                Icons.Default.PlayArrow, contentDescription = "Movies"
+            )
+        },
+            label = { Text("Music") },
+            selected = navController.currentBackStackEntry?.destination?.hasRoute<Music>() == true,
+            onClick = { navController.navigate(Music())
+        })
         NavigationBarItem(icon = {
             Icon(
                 painterResource(R.drawable.movie_24px), contentDescription = "Movies"
