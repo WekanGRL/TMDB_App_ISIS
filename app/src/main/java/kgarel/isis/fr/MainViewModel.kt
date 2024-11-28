@@ -6,6 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil.memory.MemoryCache
+import com.example.myapplicationtest.playlistjson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -32,12 +36,13 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
     val shows = MutableStateFlow<List<Show>>(listOf())
     val actors = MutableStateFlow<List<Actor>>(listOf())
 
+    val playlist=MutableStateFlow<Playlist?>(null)
+
     val selectedMovie = MutableStateFlow<Movie?>(null)
     val selectedShow = MutableStateFlow<Show?>(null)
     val selectedActor = MutableStateFlow<Actor?>(null)
 
     var globalFav by mutableStateOf(false)
-
     var searchText by mutableStateOf("")
 
     init {
@@ -45,6 +50,19 @@ class MainViewModel @Inject constructor(private val repo: Repository) : ViewMode
         getInitialShows()
         getInitialActors()
     }
+
+    fun getPlaylist(){
+        playlist.value = fetchPlaylist()
+    }
+
+    // récupère la playlist
+    fun fetchPlaylist(): Playlist {
+        val moshi=Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        return moshi.adapter(Playlist::class.java).fromJson(playlistjson)!!
+    }
+
+
+
 
     fun changeDestination(newDestination: Destination) {
         destination.value = newDestination
